@@ -15,11 +15,13 @@ class AddOption extends Component {
         const options = e.target.elements.option.value.trim();
         const error = this.props.handleAddOption(options);
 
-        this.setSate(() => {
-            return {
-                error: error
-            }
-        });        
+        console.log(error);
+        this.setState(() => ({ error}));
+
+        if(!error){
+            e.target.elements.option.value = '';
+        }
+              
     }
 
     render() {

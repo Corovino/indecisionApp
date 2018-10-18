@@ -4,22 +4,57 @@ import Action from './Action';
 import Options from './Options';
 import AddOption from './AddOption';
 
+
+
 class IndecisionApp extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            options: []
+            options: props.options
         }
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handlePick = this.handlePick.bind(this);
     }
 
-    handleDeleteOptions(){
-        console.log('hola');
+    componentDidMount = (prevProps, prevState) => {
+
+        try {
+            const json = localStorage.getItem('options');
+            const options = JSON.parse(json);
+
+            if(options){
+                this.setState(() => ({ options }));
+            }
+            
+        } catch (error) {
+            
+        }
+
+    }
+
+    componentDidUpdate( prevProps, prevState) {
         
-        this.setState({ options: []});
+        if( prevState.options.length !== this.state.options.length){
+
+            const json = JSON.stringify(this.state.options);
+            localStorage.setItem('options',json);
+
+        }
+      
+    }
+    
+
+    handleDeleteOptions(){
+        this.setState(() => ({ options: [] }))
+    }
+
+    handleDeleteOption(optionToRemove){
+        console.log(optionToRemove);
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option ) 
+        }));
     }
 
     handlePick() {
@@ -36,27 +71,26 @@ class IndecisionApp extends Component {
             return 'this option already exist';    
         }
 
+        this.setState( ( prevState ) => ({ options: prevState.options.concat([option])}))
 
-        this.setState( (prevState) => {
-             return {
-                 options : prevState.options.concat([option])
-             }   
-        })
     }
 
+    
+
     render() {
-        const title = 'Indecision app';
+        
         const subtitle = 'Put your life n the hands of a computer';
         
         return (
             <div>
-                <Header title={title} subtitle={subtitle} />
+                <Header  subtitle={subtitle} />
                 <Action  
                    hasOptions={this.state.options.length > 0}
                    handlePick={this.handlePick}/>
                 <Options 
                     options={this.state.options}
-                    handleDeleteOption={this.handleDeleteOption} />
+                    handleDeleteOptions={this.handleDeleteOptions.bind(this)}
+                    handleDeleteOption={this.handleDeleteOption.bind(this)} />
                 <AddOption 
                     handleAddOption={this.handleAddOption}   
                 />
