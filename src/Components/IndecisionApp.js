@@ -8,15 +8,11 @@ import AddOption from './AddOption';
 
 class IndecisionApp extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            options: props.options
-        }
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handlePick = this.handlePick.bind(this);
+    state = {
+        options: []
     }
+
+    
 
     componentDidMount = (prevProps, prevState) => {
 
@@ -46,7 +42,7 @@ class IndecisionApp extends Component {
     }
     
 
-    handleDeleteOptions(){
+    handleDeleteOptions = () => {
         this.setState(() => ({ options: [] }))
     }
 
@@ -57,13 +53,13 @@ class IndecisionApp extends Component {
         }));
     }
 
-    handlePick() {
+    handlePick = () =>  {
         const randomNum = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNum];
         alert(option);
     }
     
-    handleAddOption(option){
+    handleAddOption = (option) => {
 
         if(!option){
             return 'Enter a valid value to add item';
