@@ -6,7 +6,6 @@ class AddOption extends Component {
         error: undefined
     };
 
-    
 
     handledAddOption = (e) =>  {
         e.preventDefault();

@@ -3,16 +3,16 @@ import Header from './Header';
 import Action from './Action';
 import Options from './Options';
 import AddOption from './AddOption';
+import OptionModal from './OptionModal';
 
 
 
 class IndecisionApp extends Component {
 
     state = {
-        options: []
+        options: [],
+        selectedOption: undefined
     }
-
-    
 
     componentDidMount = (prevProps, prevState) => {
 
@@ -36,12 +36,10 @@ class IndecisionApp extends Component {
 
             const json = JSON.stringify(this.state.options);
             localStorage.setItem('options',json);
-
         }
       
     }
     
-
     handleDeleteOptions = () => {
         this.setState(() => ({ options: [] }))
     }
@@ -56,7 +54,16 @@ class IndecisionApp extends Component {
     handlePick = () =>  {
         const randomNum = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNum];
-        alert(option);
+        
+        this.setState(() => ({ 
+            selectedOption: option 
+        }));
+        
+    }
+
+    handleClearSelectedOption = () => {
+        this.setState( () => ({ selectedOption : undefined }) );
+        console.log(this.state);
     }
     
     handleAddOption = (option) => {
@@ -71,12 +78,10 @@ class IndecisionApp extends Component {
 
     }
 
-    
-
     render() {
         
         const subtitle = 'Put your life n the hands of a computer';
-        
+        console.log(!!this.state.selectedOption);
         return (
             <div>
                 <Header  subtitle={subtitle} />
@@ -89,6 +94,10 @@ class IndecisionApp extends Component {
                     handleDeleteOption={this.handleDeleteOption.bind(this)} />
                 <AddOption 
                     handleAddOption={this.handleAddOption}   
+                />
+                <OptionModal
+                    handleClearSelectedOption={this.handleClearSelectedOption} 
+                    selectedOption={this.state.selectedOption}
                 />
             </div>
         );

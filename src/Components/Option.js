@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 
-const Option = (props) => {
-        return (
+const Option = (props) =>  (
             <div>
                 <p>{props.optionsText}</p>
                 <button 
@@ -12,7 +11,5 @@ const Option = (props) => {
                 </button>
             </div>
         )
-}
-
 
 export default Option;
