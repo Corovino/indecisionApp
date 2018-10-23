@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import 'normalize.css/normalize.css';
+import './App.scss';
 import logo from './logo.svg';
-import './App.css';
 import IndecisionApp from './Components/IndecisionApp';
 
 IndecisionApp.defaultProps = {
