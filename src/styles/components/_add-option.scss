@@ -8,13 +8,33 @@
 .add-option{
   display:flex;
   padding: $m-size;
+  flex-direction: column;
   &__input{
      background: $dark-blue;
      border:none;
      color: $off-white;
      border-bottom: .3rem solid darken($dark-blue, 10%);
      flex-grow: 1;
-     margin-right: $m-size;
+     margin: 0 0  $m-size 0;
+     padding: $m-size;
 
   }
 }
+
+
+@media(min-width : $desktop-breakpoint){
+   .add-option{
+      flex-direction: row;
+
+      &_input{
+        margin-right: 0 0  $m-size 0;
+      }
+   }
+}
+
+
+
+
+
+
+
